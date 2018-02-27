@@ -35,7 +35,7 @@ public class HibernateConfig {
 	
 	//DataSource Bean
 	@Bean
-	private DataSource getDataSource() {
+	public DataSource getDataSource() {
 		BasicDataSource datasource = new BasicDataSource();
 		
 		//providing the database connection information
@@ -44,8 +44,6 @@ public class HibernateConfig {
 		datasource.setUrl(DATABASE_URL);
 		datasource.setUsername(DATABASE_USERNAME);
 		datasource.setPassword(DATABASE_PASWORD);
-		
-		
 		
 		return datasource;
 		
@@ -63,22 +61,20 @@ public class HibernateConfig {
 	}
 
 	// All the hinernate properties will be returned in this method
-	private Properties getHibernateProperies() {
+	public Properties getHibernateProperies() {
 		Properties properties = new Properties();
 		properties.put("hibernate.dialect", DATABASE_DIALECT);
 		properties.put("hinermate.show.sql","true");
 		properties.put("hibenrate.format.sql", "true");
-
 		return properties;
 	}
 	
 	//Transaction Manager Bean
 	@Bean
 	public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory) {
-		HibernateTransactionManager transactionManger = new org.springframework.orm.hibernate5.HibernateTransactionManager(sessionFactory);
 		
-		
-		return transactionManger;		
+		HibernateTransactionManager transactionManager = new HibernateTransactionManager(sessionFactory);
+		return transactionManager;		
 	}
 	
 }

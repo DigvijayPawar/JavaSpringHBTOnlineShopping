@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,78 +14,79 @@ import com.app.shoping_backend.dto.Category;
 
 //@Component
 @Repository("categoryDAO")
+@Transactional
 public class CategoryDAOImpl implements CategoryDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	private static List<Category> categories = new ArrayList<>();
-
-	static {
-
-		// First category
-		Category category = new Category();
-		category.setId(1);
-		category.setName("Mobile");
-		category.setDescription("This is Mobile category");
-		category.setImageUrl("CAT_1.jpg");
-		// category.setActive(true);
-		categories.add(category);
-
-		// Second category
-		category = new Category();
-		category.setId(2);
-		category.setName("Television");
-		category.setDescription("This is Television category");
-		category.setImageUrl("CAT_2.jpg");
-		// category.setActive(true);
-
-		categories.add(category);
-
-		// Third category
-		category = new Category();
-		category.setId(3);
-		category.setName("laptop");
-		category.setDescription("This is laptop category");
-		category.setImageUrl("CAT_3.jpg");
-		// category.setActive(true);
-
-		categories.add(category);
-
-	}
 
 	@Override
 	public List<Category> list() {
 
-		return categories;
+		String selectActiveCategory = "FROM Category where active = :active";
+		
+		Query query = sessionFactory.getCurrentSession().createQuery(selectActiveCategory);
+		
+		query.setParameter("active",true);
+		
+		return query.getResultList();
 	}
 
+	/*
+	 * getting single category based on id
+	 */
 	@Override
 	public Category get(int id) {
 
-		// enhanced for loop
-		for (Category category : categories) {
+		/*
+		 * here the id which we are passing is of premitive type. to fetch the category
+		 * by id we need to pass its reference type by using wrapper class
+		 * Integer.valueOf(id);
+		 */
 
-			if (category.getId() == id)
-				return category;
-		}
-		return null; 
+		return sessionFactory.getCurrentSession().get(Category.class, Integer.valueOf(id));
 	}
 
 	@Override
-	@Transactional
+
 	public boolean add(Category category) {
+		try {
+			// add the category to the database table
+			sessionFactory.getCurrentSession().persist(category);
+			return true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}
+	}
+
+	/*
+	 * method to update a single category
+	 */
+	@Override
+	public boolean update(Category category) {
+		try {
+			// update the category into the database table
+			sessionFactory.getCurrentSession().update((category));
+			return true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public boolean delete(Category category) {
+		
+		category.setActive(false);
 		
 		try {
 			
-			sessionFactory.getCurrentSession().persist(category);
+			sessionFactory.getCurrentSession().update((category));
 			return true;
-		}
-		catch(Exception ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
-			return false; 	
+			return false;
 		}
-		
-		
 	}
-
 }
