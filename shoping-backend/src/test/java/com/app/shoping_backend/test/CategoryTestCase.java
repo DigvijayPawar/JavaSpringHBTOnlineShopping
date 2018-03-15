@@ -31,7 +31,7 @@ public class CategoryTestCase {
 	 * category.setName("laptop");
 	 * category.setDescription("This is laptop category");
 	 * category.setImageUrl("CAT_101.jpg");
-	 * assertEquals("Succesfully added category inside table",true,categoryDAO.add(
+	 * assertEquals("Something went wrong while inserting the product",true,categoryDAO.add(
 	 * category));
 	 * 
 	 * }

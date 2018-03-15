@@ -12,8 +12,8 @@
 
 
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en		">
+					
 <head>
 
 <meta charset="utf-8">
@@ -26,6 +26,10 @@
 
 <script type="text/javascript">
 	window.menu = '${title}';
+	
+	window.contextRoot = '${contextRoot}'
+	
+	
 </script>
 
 <!-- Bootstrap core CSS -->
@@ -33,6 +37,10 @@
 
 <!-- Bootstrap-lux-theme-CSS -->
 <link href="${css}/bootstrap-lux-theme.css" rel="stylesheet">
+
+<!-- Bootstrap-DataTables-CSS -->
+<link href="${css}/dataTables.bootstrap.css" rel="stylesheet">
+
 
 <!-- Custom styles for this template -->
 <link href="${css}/myapp.css" rel="stylesheet">
@@ -54,12 +62,13 @@
 				<%@include file="about.jsp"%>
 			</c:if>
 
-			<c:if test="${userclicksallproducts==true or userclickscategoryproducts==true}">
+			<c:if
+				test="${userclicksallproducts==true or userclickscategoryproducts==true}">
 				<%@include file="listproducts.jsp"%>
 			</c:if>
 
 
-		<%-- 	<c:if test="${userclickslistproducts==true}">
+			<%-- 	<c:if test="${userclickslistproducts==true}">
 				<%@include file="listproducts.jsp"%>
 			</c:if>
  --%>
@@ -73,9 +82,17 @@
 		<%@include file="./shared/footer.jsp"%>
 
 
-		<!-- Bootstrap core JavaScript -->
+		<!-- jQuery -->
 		<script src="${js}/jquery.js"></script>
+
+		<!-- Bootstrap core JavaScript -->
 		<script src="${js}/bootstrap.min.js"></script>
+
+		<!-- Datatable Plugin -->
+		<script src="${js}/jquery.dataTables.js"></script>
+		
+		<!-- Datatable BootStrap Script -->
+		<%-- 		<script src="${js}/dataTables.bootstrap.js"></script> --%>
 
 		<!-- self coded java script -->
 		<script src="${js}/myapp.js"></script>
