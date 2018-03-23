@@ -12,8 +12,8 @@
 
 
 <!DOCTYPE html>
-<html lang="en		">
-					
+<html lang="en">
+
 <head>
 
 <meta charset="utf-8">
@@ -26,10 +26,8 @@
 
 <script type="text/javascript">
 	window.menu = '${title}';
-	
+
 	window.contextRoot = '${contextRoot}'
-	
-	
 </script>
 
 <!-- Bootstrap core CSS -->
@@ -67,11 +65,15 @@
 				<%@include file="listproducts.jsp"%>
 			</c:if>
 
+			<%-- <!-- here it displays single product when clicked  -->
+				<c:if test="${userclicksshowproducts==true}">
+				<%@include file="SingleProduct.jsp"%>
+			</c:if> --%>
 
-			<%-- 	<c:if test="${userclickslistproducts==true}">
-				<%@include file="listproducts.jsp"%>
+			<c:if test="${userclicksshowproducts==true}">
+				<%@include file="SingleProduct2.jsp"%>
 			</c:if>
- --%>
+
 			<c:if test="${userclickscontact==true}">
 				<%@include file="contact.jsp"%>
 			</c:if>
@@ -90,7 +92,7 @@
 
 		<!-- Datatable Plugin -->
 		<script src="${js}/jquery.dataTables.js"></script>
-		
+
 		<!-- Datatable BootStrap Script -->
 		<%-- 		<script src="${js}/dataTables.bootstrap.js"></script> --%>
 
